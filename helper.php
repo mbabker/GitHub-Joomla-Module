@@ -94,6 +94,7 @@ class modGithubHelper {
 		// Load the parameters
 		$uname		= $params->get('username', '');
 		$repo		= $params->get('repo', '');
+		$count		= $params->get('count', 3) - 1;
 
 		// Convert the list name to a useable string for the JSON
 		if ($repo) {
@@ -102,28 +103,30 @@ class modGithubHelper {
 
 		// Process the feed
 		foreach ($obj as $o) {
-			// Initialize a new object
-			$github[$i]->commit	= new stdClass();
+			if ($i <= $count) {
+				// Initialize a new object
+				$github[$i]->commit	= new stdClass();
 
-			// The commit message linked to the commit
-			$github[$i]->commit->message = '<a href="https://github.com/'.$uname.'/'.$frepo.'/'.$o['sha'].'">'.$o['commit']['message'].'</a>';
+				// The commit message linked to the commit
+				$github[$i]->commit->message = '<a href="https://github.com/'.$uname.'/'.$frepo.'/'.$o['sha'].'">'.$o['commit']['message'].'</a>';
 
-			// Check if the committer information
-			if ($o['author']['id'] != $o['committer']['id']) {
-				// The committer name formatted with link
-				$github[$i]->commit->committer	= JText::_('MOD_GITHUB_AND_COMMITTED_BY').'<a href="'.$o['committer']['url'].'">'.$o['commit']['committer']['name'].'</a>';
+				// Check if the committer information
+				if ($o['author']['id'] != $o['committer']['id']) {
+					// The committer name formatted with link
+					$github[$i]->commit->committer	= JText::_('MOD_GITHUB_AND_COMMITTED_BY').'<a href="'.$o['committer']['url'].'">'.$o['commit']['committer']['name'].'</a>';
 
-				// The author wasn't the committer
-				$github[$i]->commit->author		= JText::_('MOD_GITHUB_AUTHORED_BY');
-			} else {
-				// The author is also the committer
-				$github[$i]->commit->author		= JText::_('MOD_GITHUB_COMMITTED_BY');
+					// The author wasn't the committer
+					$github[$i]->commit->author		= JText::_('MOD_GITHUB_AUTHORED_BY');
+				} else {
+					// The author is also the committer
+					$github[$i]->commit->author		= JText::_('MOD_GITHUB_COMMITTED_BY');
+				}
+
+				// The author name formatted with link
+				$github[$i]->commit->author .= '<a href="'.$o['author']['url'].'">'.$o['commit']['author']['name'].'</a>';
+
+				$i++;
 			}
-
-			// The author name formatted with link
-			$github[$i]->commit->author .= '<a href="'.$o['author']['url'].'">'.$o['commit']['author']['name'].'</a>';
-
-			$i++;
 		}
 		return $github;
 	}

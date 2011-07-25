@@ -11,17 +11,14 @@ defined('_JEXEC') or die;
 
 // Variables for the foreach
 $i		= 0;
-$count	= $params->get("count", 3) - 1;
 ?>
 <ul class="GH-commit<?php echo $moduleclass_sfx;?>">
-	<?php foreach ($github->commit as $o) {
-		if ($i <= $count) { ?>
-		<li><?php echo $o->commit->message.$o->commit->author;
-		if (isset($o->commit->committer)) {
-			echo $o->commit->committer;
-		} ?>
-		</li>
+	<?php foreach ($github as $o) { ?>
+	<li><?php echo $o->commit->message.$o->commit->author;
+	if (isset($o->commit->committer)) {
+		echo $o->commit->committer;
+	} ?>
+	</li>
 	<?php $i++;
-		}
 	} ?>
 </ul>
