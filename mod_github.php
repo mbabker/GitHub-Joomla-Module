@@ -1,8 +1,8 @@
 <?php
 /**
-* Tweet Display Back Module for Joomla!
+* GitHub Module for Joomla!
 *
-* @copyright	Copyright (C) 2010-2011 Michael Babker. All rights reserved.
+* @copyright	Copyright (C) 2011 Michael Babker. All rights reserved.
 * @license		GNU/GPL - http://www.gnu.org/copyleft/gpl.html
 */
 
@@ -39,10 +39,7 @@ if ($params->get('cache') == 1) {
 	$twitter = modGithubHelper::compileData($params);
 }
 
-if (isset($twitter->hits)) {
-	echo JText::_('MOD_GITHUB_ERROR_NOHITS');
-	return;
-} else if ((!$twitter) || (isset($twitter->error))) {
+if ((!$github) || (isset($github->error))) {
 	echo JText::_('MOD_GITHUB_ERROR_UNABLETOLOAD');
 	return;
 }

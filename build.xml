@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="github" default="dev_head" basedir=".">
+	<target
+		name="dev_head"
+		description="Builds test packages based on the development head"
+		depends="rebuild-packages,common-files,17-package"
+	>
+		<echo msg="Deleting old master builds" />
+		<delete quiet="yes" includeemptydirs="true">
+			<fileset dir="*">
+				<include name="releases/mod_github_master.zip" />
+			</fileset>
+		</delete>
+		<echo msg="Build 1.7 package" />
+		<zip destfile="releases/mod_github_master.zip">
+			<fileset dir="packages/1.7">
+				<include name="**" />
+			</fileset>
+		</zip>
+	</target>
+	<target
+		name="release"
+		description="Builds release packages based on the development head"
+		depends="rebuild-packages,common-files,17-package"
+	>
+		<echo msg="Build 1.6/1.7 package" />
+		<zip destfile="releases/mod_github_100.zip">
+			<fileset dir="packages/1.7">
+				<include name="**" />
+			</fileset>
+		</zip>
+	</target>
+	<target name="common-files" description="Stages the common files" depends="rebuild-packages">
+		<echo msg="Create temp folder" />
+		<mkdir dir="packages/common" />
+		<echo msg="Copy files" />
+		<!-- <copy todir="packages/common/media">
+			<fileset dir="media" />
+		</copy>
+		<copy todir="packages/common/tmpl">
+			<fileset dir="tmpl" />
+		</copy> -->
+		<copy todir="packages/common">
+			<fileset dir=".">
+				<include name="CHANGELOG.php" />
+				<include name="helper.php" />
+				<include name="index.html" />
+				<include name="mod_github.php" />
+			</fileset>
+	    </copy>
+	</target>
+	<target name="17-package" description="Builds the 1.7 package" depends="rebuild-packages">
+		<echo msg="Create 1.7 temp folder" />
+		<mkdir dir="packages/1.7" />
+		<echo msg="Create 1.7 language folder" />
+		<copy todir="packages/1.7/language">
+			<fileset dir="language/1.7" />
+	    </copy>
+		<echo msg="Copy 1.7 manifest" />
+		<copy
+			file="mod_github.xml"
+			tofile="packages/1.7/mod_github.xml"
+			overwrite="true" />
+	</target>
+	<target name="rebuild-packages" description="Delete old packages">
+		<echo msg="Deleting packages dir" />
+		<delete quiet="yes" includeemptydirs="true">
+			<fileset dir="*">
+				<include name="packages" />
+			</fileset>
+		</delete>
+		<echo msg="Creating packages dir" />
+		<mkdir dir="packages" />
+	</target>
+</project>
