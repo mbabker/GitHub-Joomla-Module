@@ -33,15 +33,17 @@ if ($params->get('cache') == 1) {
 	$cache->setCaching(true);
 
 	// Call the cache; if expired, pull new data
-	$twitter = $cache->call(array('modGithubHelper', 'compileData'), $params);
+	$github = $cache->call(array('modGithubHelper', 'compileData'), $params);
 } else {
 	// Pull new data
-	$twitter = modGithubHelper::compileData($params);
+	$github = modGithubHelper::compileData($params);
 }
 
 if ((!$github) || (isset($github->error))) {
 	echo JText::_('MOD_GITHUB_ERROR_UNABLETOLOAD');
 	return;
 }
+
+$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
 require(JModuleHelper::getLayoutPath('mod_github', $params->get('templateLayout', 'default')));

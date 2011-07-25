@@ -10,7 +10,6 @@
 	<license>GNU/GPL</license>
 	<description>MOD_GITHUB_XML_DESCRIPTION</description>
 	<files>
-		<folder>media</folder>
 		<folder>tmpl</folder>
 		<filename module="mod_github">mod_github.php</filename>
 		<filename>CHANGELOG.php</filename>
@@ -35,7 +34,15 @@
 					name="repo"
 					type="text"
 					label="MOD_GITHUB_FIELDSET_GITHUB_REPO_LABEL"
-					description="MOD_GITHUB_FIELDSET_GITHUB_REPO_DESCRIPTION" />
+					description="MOD_GITHUB_FIELDSET_GITHUB_REPO_DESCRIPTION"
+					required="true" />
+				<field
+					name="count"
+					type="text"
+					label="MOD_GITHUB_FIELDSET_GITHUB_COUNT_LABEL"
+					description="MOD_GITHUB_FIELDSET_GITHUB_COUNT_DESCRIPTION"
+					required="true"
+					filter="integer" />
 			</fieldset>
 			<fieldset name="advanced">
 				<field

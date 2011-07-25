@@ -78,7 +78,7 @@ class modGithubHelper {
 	}
 
 	/**
-	 * Function to process the Twitter feed into a formatted object
+	 * Function to process the GitHub data into a formatted object
 	 *
 	 * @param	object	$obj		The data object
 	 * @param	object	$params		The module parameters
@@ -91,70 +91,41 @@ class modGithubHelper {
 		$github = array();
 		$i = 0;
 
+		// Load the parameters
+		$uname		= $params->get('username', '');
+		$repo		= $params->get('repo', '');
+
+		// Convert the list name to a useable string for the JSON
+		if ($repo) {
+			$frepo	= self::toAscii($repo);
+		}
+
 		// Process the feed
 		foreach ($obj as $o) {
 			// Initialize a new object
 			$github[$i]->commit	= new stdClass();
 
-			// The commit message
-			$github[$i]->commit->message = $o['commit']['message'];
+			// The commit message linked to the commit
+			$github[$i]->commit->message = '<a href="https://github.com/'.$uname.'/'.$frepo.'/'.$o['sha'].'">'.$o['commit']['message'].'</a>';
+
+			// Check if the committer information
+			if ($o['author']['id'] != $o['committer']['id']) {
+				// The committer name formatted with link
+				$github[$i]->commit->committer	= JText::_('MOD_GITHUB_AND_COMMITTED_BY').'<a href="'.$o['committer']['url'].'">'.$o['commit']['committer']['name'].'</a>';
+
+				// The author wasn't the committer
+				$github[$i]->commit->author		= JText::_('MOD_GITHUB_AUTHORED_BY');
+			} else {
+				// The author is also the committer
+				$github[$i]->commit->author		= JText::_('MOD_GITHUB_COMMITTED_BY');
+			}
+
+			// The author name formatted with link
+			$github[$i]->commit->author .= '<a href="'.$o['author']['url'].'">'.$o['commit']['author']['name'].'</a>';
 
 			$i++;
 		}
 		return $github;
-	}
-
-	/**
-	 * Function to convert a static time into a relative measurement
-	 *
-	 * @param	string	$date	The date to convert
-	 *
-	 * @return	string	$date	A text string of a relative time
-	 * @since	1.0
-	 */
-	static function renderRelativeTime($date) {
-		$diff = time() - strtotime($date);
-		// Less than a minute
-		if ($diff < 60) {
-			return JText::_('MOD_TWEETDISPLAYBACK_CREATE_LESSTHANAMINUTE');
-		}
-		$diff = round($diff/60);
-		// 60 to 119 seconds
-		if ($diff < 2) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_MINUTE', $diff);
-		}
-		// 2 to 59 minutes
-		if ($diff < 60) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_MINUTES', $diff);
-		}
-		$diff = round($diff/60);
-		// 1 hour
-		if ($diff < 2) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_HOUR', $diff);
-		}
-		// 2 to 23 hours
-		if ($diff < 24) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_HOURS', $diff);
-		}
-		$diff = round($diff/24);
-		// 1 day
-		if ($diff < 2) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_DAY', $diff);
-		}
-		// 2 to 6 days
-		if ($diff < 7) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_DAYS', $diff);
-		}
-		$diff = round($diff/7);
-		// 1 week
-		if ($diff < 2) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_WEEK', $diff);
-		}
-		// 2 or 3 weeks
-		if ($diff < 4) {
-			return JText::sprintf('MOD_TWEETDISPLAYBACK_CREATE_WEEKS', $diff);
-		}
-		return JHTML::date($date);
 	}
 
 	/**
