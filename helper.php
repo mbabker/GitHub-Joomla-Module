@@ -108,12 +108,12 @@ class modGithubHelper {
 				$github[$i]->commit	= new stdClass();
 
 				// The commit message linked to the commit
-				$github[$i]->commit->message = '<a href="https://github.com/'.$uname.'/'.$frepo.'/'.$o['sha'].'">'.$o['commit']['message'].'</a>';
+				$github[$i]->commit->message = '<a href="https://github.com/'.$uname.'/'.$frepo.'/commit/'.$o['sha'].'">'.$o['commit']['message'].'</a>';
 
 				// Check if the committer information
 				if ($o['author']['id'] != $o['committer']['id']) {
 					// The committer name formatted with link
-					$github[$i]->commit->committer	= JText::_('MOD_GITHUB_AND_COMMITTED_BY').'<a href="'.$o['committer']['url'].'">'.$o['commit']['committer']['name'].'</a>';
+					$github[$i]->commit->committer	= JText::_('MOD_GITHUB_AND_COMMITTED_BY').'<a href="https://github.com/'.$o['committer']['login'].'">'.$o['commit']['committer']['name'].'</a>';
 
 					// The author wasn't the committer
 					$github[$i]->commit->author		= JText::_('MOD_GITHUB_AUTHORED_BY');
@@ -123,7 +123,7 @@ class modGithubHelper {
 				}
 
 				// The author name formatted with link
-				$github[$i]->commit->author .= '<a href="'.$o['author']['url'].'">'.$o['commit']['author']['name'].'</a>';
+				$github[$i]->commit->author .= '<a href="https://github.com/'.$o['author']['login'].'">'.$o['commit']['author']['name'].'</a>';
 
 				$i++;
 			}
