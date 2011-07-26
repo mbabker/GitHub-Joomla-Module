@@ -17,7 +17,8 @@ $i		= 0;
 	<li><?php echo $o->commit->message.$o->commit->author;
 	if (isset($o->commit->committer)) {
 		echo $o->commit->committer;
-	} ?>
+	}
+	echo $o->commit->time; ?>
 	</li>
 	<?php $i++;
 	} ?>

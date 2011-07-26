@@ -43,6 +43,17 @@
 					description="MOD_GITHUB_FIELDSET_GITHUB_COUNT_DESCRIPTION"
 					required="true"
 					filter="integer" />
+				<field
+					name="relativeTime"
+					type="radio"
+					default="1"
+					label="MOD_GITHUB_FIELDSET_GITHUB_RELATIVETIME_LABEL"
+					description="MOD_GITHUB_FIELDSET_GITHUB_RELATIVETIME_DESCRIPTION" >
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
 			</fieldset>
 			<fieldset name="advanced">
 				<field

@@ -125,10 +125,72 @@ class modGithubHelper {
 				// The author name formatted with link
 				$github[$i]->commit->author .= '<a href="https://github.com/'.$o['author']['login'].'" target="_blank" rel="nofollow">'.$o['commit']['author']['name'].'</a>';
 
+				// The time of commit
+				$date = date_create($o['commit']['committer']['date']);
+				$date = date_format($date, 'r');
+				if ($params->get('relativeTime', '1') == '1') {
+					$github[$i]->commit->time	= self::renderRelativeTime($date);
+				} else {
+					$github[$i]->commit->time	= JHTML::date($date);
+				}
+
 				$i++;
 			}
 		}
 		return $github;
+	}
+
+	/**
+	 * Function to convert a static time into a relative measurement
+	 *
+	 * @param	string	$date	The date to convert
+	 *
+	 * @return	string	$date	A text string of a relative time
+	 * @since	1.0
+	 */
+	static function renderRelativeTime($date) {
+		$diff = time() - strtotime($date);
+		// Less than a minute
+		if ($diff < 60) {
+			return JText::_('MOD_GITHUB_CREATE_LESSTHANAMINUTE');
+		}
+		$diff = round($diff/60);
+		// 60 to 119 seconds
+		if ($diff < 2) {
+			return JText::sprintf('MOD_GITHUB_CREATE_MINUTE', $diff);
+		}
+		// 2 to 59 minutes
+		if ($diff < 60) {
+			return JText::sprintf('MOD_GITHUB_CREATE_MINUTES', $diff);
+		}
+		$diff = round($diff/60);
+		// 1 hour
+		if ($diff < 2) {
+			return JText::sprintf('MOD_GITHUB_CREATE_HOUR', $diff);
+		}
+		// 2 to 23 hours
+		if ($diff < 24) {
+			return JText::sprintf('MOD_GITHUB_CREATE_HOURS', $diff);
+		}
+		$diff = round($diff/24);
+		// 1 day
+		if ($diff < 2) {
+			return JText::sprintf('MOD_GITHUB_CREATE_DAY', $diff);
+		}
+		// 2 to 6 days
+		if ($diff < 7) {
+			return JText::sprintf('MOD_GITHUB_CREATE_DAYS', $diff);
+		}
+		$diff = round($diff/7);
+		// 1 week
+		if ($diff < 2) {
+			return JText::sprintf('MOD_GITHUB_CREATE_WEEK', $diff);
+		}
+		// 2 or 3 weeks
+		if ($diff < 4) {
+			return JText::sprintf('MOD_GITHUB_CREATE_WEEKS', $diff);
+		}
+		return JHTML::date($date);
 	}
 
 	/**
