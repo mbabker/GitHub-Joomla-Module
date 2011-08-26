@@ -10,7 +10,8 @@
 defined('_JEXEC') or die;
 
 // Check if cURL is loaded; if not, proceed no further
-if (!extension_loaded('curl')) {
+if (!extension_loaded('curl'))
+{
 	echo JText::_('MOD_GITHUB_ERROR_NOCURL');
 	return;
 }
@@ -19,14 +20,16 @@ if (!extension_loaded('curl')) {
 require_once dirname(__FILE__).'/helper.php';
 
 // Check if caching is enabled
-if ($params->get('cache') == 1) {
+if ($params->get('cache') == 1)
+{
 	// Set the cache parameters
 	$options = array(
 		'defaultgroup' => 'mod_github');
 	$cache		= JCache::getInstance('callback', $options);
 	$cacheTime	= $params->get('cache_time');
 	// J! 1.5 and 1.6 cache is set in seconds, 1.7 caches in minutes
-	if (version_compare(JVERSION,'1.7.0','ge')) {
+	if (version_compare(JVERSION,'1.7.0','ge'))
+	{
 		$cacheTime	= round($cacheTime / 60);
 	}
 	$cache->setLifeTime($cacheTime);
@@ -34,16 +37,19 @@ if ($params->get('cache') == 1) {
 
 	// Call the cache; if expired, pull new data
 	$github = $cache->call(array('modGithubHelper', 'compileData'), $params);
-} else {
+}
+else
+{
 	// Pull new data
 	$github = modGithubHelper::compileData($params);
 }
 
-if ((!$github) || (isset($github->error))) {
+if ((!$github) || (isset($github->error)))
+{
 	echo JText::_('MOD_GITHUB_ERROR_UNABLETOLOAD');
 	return;
 }
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
-require(JModuleHelper::getLayoutPath('mod_github', $params->get('templateLayout', 'default')));
+require JModuleHelper::getLayoutPath('mod_github', $params->get('templateLayout', 'default'));
