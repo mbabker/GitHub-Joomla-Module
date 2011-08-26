@@ -120,7 +120,7 @@ class modGithubHelper
 
 				// The commit message linked to the commit
 				$github[$i]->commit->message = '<a href="https://github.com/'.$uname.'/'.$frepo.'/commit/'.$o['sha'].'" target="_blank" rel="nofollow">'.substr($o['sha'], 0, 7).'</a> - ';
-				$github[$i]->commit->message .= preg_replace("/#(\w+)/", "#<a href=\"https://github.com/'.$uname.'/'.$frepo.'/issues/\\1\" target=\"_blank\" rel=\"nofollow\">\\1</a>", htmlspecialchars($o['commit']['message']));
+				$github[$i]->commit->message .= preg_replace("/#(\w+)/", '#<a href="https://github.com/'.$uname.'/'.$frepo.'/issues/\\1" target="_blank" rel="nofollow">\\1</a>', htmlspecialchars($o['commit']['message']));
 
 				// Check if the committer information
 				if ($o['author']['id'] != $o['committer']['id'])
