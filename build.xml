@@ -52,6 +52,9 @@
 		<echo msg="Create temp folder" />
 		<mkdir dir="packages/common" />
 		<echo msg="Copy files" />
+		<copy todir="packages/common/media">
+			<fileset dir="media" />
+		</copy>
 		<copy todir="packages/common/tmpl">
 			<fileset dir="tmpl" />
 		</copy>

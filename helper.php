@@ -157,11 +157,11 @@ class ModGithubHelper
 					// Load the JavaScript; first ensure we have MooTools Core
 					JHtml::_('behavior.framework');
 					JHtml::script('modules/mod_github/media/js/prettydate.js', false, false);
-					$github[$i]->commit->time .= '<span class="commit-time" title="'.$ISOtime.'">'.JHtml::date($o['created_at'], 'D M d H:i:s O Y').'</span>';
+					$github[$i]->commit->time = '<span class="commit-time" title="'.$ISOtime.'">'.JHtml::date($date, 'D M d H:i:s O Y').'</span>';
 				}
 				else
 				{
-					$github[$i]->commit->time	= JHtml::date($date);
+					$github[$i]->commit->time = ' '.JHtml::date($date);
 				}
 
 				$i++;
