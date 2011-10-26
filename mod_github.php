@@ -67,5 +67,5 @@ if ($params->get('relativeTime', 1) == 1)
 			.'$$("span.commit-time").prettyDate(options);'
 			.'});'
 			. '</script>';
-	$document->addCustomTag($script);
+	JFactory::getDocument()->addCustomTag($script);
 }
