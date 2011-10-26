@@ -152,7 +152,7 @@ class ModGithubHelper
 				$date = date_format($date, 'r');
 				if ($params->get('relativeTime', '1') == '1')
 				{
-					$ISOtime = JHTML::date($o['created_at'], 'Y-m-d H:i:s');
+					$ISOtime = JHTML::date($date, 'Y-m-d H:i:s');
 
 					// Load the JavaScript; first ensure we have MooTools Core
 					JHtml::_('behavior.framework');
