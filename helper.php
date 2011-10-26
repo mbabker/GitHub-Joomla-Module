@@ -23,7 +23,7 @@ class ModGithubHelper
 	 *
 	 * @param   object  $params  The module parameters
 	 *
-	 * @return  object  A formatted object with the requested information
+	 * @return  mixed  An array of data on success, an object with a failure notice otherwise.
 	 *
 	 * @since   1.0
 	 */
@@ -96,7 +96,7 @@ class ModGithubHelper
 	 * @param   array   $obj     The JSON data
 	 * @param   object  $params  The module parameters
 	 *
-	 * @return  object  The formatted data object
+	 * @return  array  An array of data for output
 	 *
 	 * @since   1.0
 	 */

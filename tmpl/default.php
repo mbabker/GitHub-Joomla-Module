@@ -10,8 +10,6 @@
 
 defined('_JEXEC') or die;
 
-// Variables for the foreach
-$i		= 0;
 ?>
 <ul class="GH-commit<?php echo $moduleclass_sfx;?>">
 	<?php foreach ($github as $o) { ?>
@@ -21,6 +19,5 @@ $i		= 0;
 	}
 	echo $o->commit->time; ?>
 	</li>
-	<?php $i++;
-	} ?>
+	<?php } ?>
 </ul>
