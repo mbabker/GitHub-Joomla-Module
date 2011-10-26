@@ -9,6 +9,7 @@
 	<version>##VERSION##</version>
 	<license>GNU/GPL</license>
 	<description>MOD_GITHUB_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
 	<files>
 		<folder>tmpl</folder>
 		<filename module="mod_github">mod_github.php</filename>
