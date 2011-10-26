@@ -16,4 +16,5 @@ releases
 .idea
 
 # Build process #
+build
 build.properties

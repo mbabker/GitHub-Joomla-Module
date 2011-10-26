@@ -1,15 +1,22 @@
 <?php
 /**
-* GitHub Module for Joomla!
-*
-* @copyright	Copyright (C) 2011 Michael Babker. All rights reserved.
-* @license		GNU/GPL - http://www.gnu.org/copyleft/gpl.html
-*/
+ * GitHub Module for Joomla!
+ *
+ * @package    GitHubModule
+ *
+ * @copyright  Copyright (C) 2011 Michael Babker. All rights reserved.
+ * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ */
 
-// No direct access
 defined('_JEXEC') or die;
 
-class modGithubHelper
+/**
+ * Helper class for the GitHub Module
+ *
+ * @package  GitHubModule
+ * @since    1.0
+ */
+class ModGithubHelper
 {
 	/**
 	 * Function to compile the data to render a formatted object
@@ -116,7 +123,7 @@ class modGithubHelper
 			if ($i <= $count)
 			{
 				// Initialize a new object
-				$github[$i]->commit	= new stdClass();
+				$github[$i]->commit	= new stdClass;
 
 				// The commit message linked to the commit
 				$github[$i]->commit->message = '<a href="https://github.com/'.$uname.'/'.$frepo.'/commit/'.$o['sha'].'" target="_blank" rel="nofollow">'.substr($o['sha'], 0, 7).'</a> - ';

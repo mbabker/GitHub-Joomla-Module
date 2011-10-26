@@ -1,12 +1,13 @@
 <?php
 /**
-* GitHub Module for Joomla!
-*
-* @copyright	Copyright (C) 2011 Michael Babker. All rights reserved.
-* @license		GNU/GPL - http://www.gnu.org/copyleft/gpl.html
-*/
+ * GitHub Module for Joomla!
+ *
+ * @package    GitHubModule
+ *
+ * @copyright  Copyright (C) 2011 Michael Babker. All rights reserved.
+ * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ */
 
-// No direct access
 defined('_JEXEC') or die;
 
 // Variables for the foreach

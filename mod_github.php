@@ -1,12 +1,13 @@
 <?php
 /**
-* GitHub Module for Joomla!
-*
-* @copyright	Copyright (C) 2011 Michael Babker. All rights reserved.
-* @license		GNU/GPL - http://www.gnu.org/copyleft/gpl.html
-*/
+ * GitHub Module for Joomla!
+ *
+ * @package    GitHubModule
+ *
+ * @copyright  Copyright (C) 2011 Michael Babker. All rights reserved.
+ * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ */
 
-// No direct access
 defined('_JEXEC') or die;
 
 // Check if cURL is loaded; if not, proceed no further
@@ -26,17 +27,12 @@ if ($params->get('cache') == 1)
 	$options = array(
 		'defaultgroup' => 'mod_github');
 	$cache		= JCache::getInstance('callback', $options);
-	$cacheTime	= $params->get('cache_time');
-	// J! 1.5 and 1.6 cache is set in seconds, 1.7 caches in minutes
-	if (version_compare(JVERSION,'1.7.0','ge'))
-	{
-		$cacheTime	= round($cacheTime / 60);
-	}
+	$cacheTime	= round($cacheTime / 60);
 	$cache->setLifeTime($cacheTime);
 	$cache->setCaching(true);
 
 	// Call the cache; if expired, pull new data
-	$github = $cache->call(array('modGithubHelper', 'compileData'), $params);
+	$github = $cache->call(array('ModGithubHelper', 'compileData'), $params);
 }
 else
 {
